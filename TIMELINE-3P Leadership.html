@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHIẾN LƯỢC LƯƠNG 3P | 2026-2027</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Color 1: Slate (Neutral Structure)
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b', 
+                            900: '#0f172a',
+                        },
+                        // Color 2: Navy (Brand Accent - Limited use)
+                        navy: {
+                            700: '#1e40af', // Primary Blue
+                            900: '#1e3a8a', // Deep Blue
+                        },
+                        // Color 3: Gold (Highlight)
+                        gold: {
+                            500: '#d97706', // Amber 600
+                            400: '#f59e0b', // Amber 500
+                        },
+                        // Color 4: Teal (Growth/Performance)
+                        teal: {
+                            600: '#0d9488',
+                            50: '#f0fdfa'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Be Vietnam Pro"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft-3d': '0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025), inset 0 0 0 1px rgba(255,255,255,0.5)',
+                        'hover-3d': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #334155; /* Slate 700 */
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #1e3a8a, #0d9488);
+        }
+
+        /* 3D Card */
+        .card-pro {
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-pro:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #cbd5e1;
+        }
+
+        /* Timeline Connector */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #e2e8f0; /* Light Slate */
+            z-index: 0;
+        }
+        @media (max-width: 768px) {
+            .timeline-line { left: 28px; }
+        }
+
+        /* Button Pro */
+        .btn-pro {
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .btn-pro:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
+        /* Accordion */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 500px; /* Arbitrary large number */
+        }
+        
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- Cleaner Header -->
+    <header class="bg-white sticky top-0 z-50 shadow-sm border-b border-slate-200">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="bg-navy-900 text-white p-2.5 rounded-lg shadow-md">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-black uppercase tracking-tight text-slate-800">KẾ HOẠCH 3P</h1>
+                        <p class="text-xs font-bold text-gold-500 uppercase tracking-widest">GIAI ĐOẠN 2026-2027</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex gap-6 text-sm font-bold uppercase tracking-wide text-slate-500">
+                    <a href="#overview" class="hover:text-navy-700 transition-colors">Tổng quan</a>
+                    <a href="#timeline" class="hover:text-navy-700 transition-colors">Lộ trình</a>
+                </div>
+
+                <button class="bg-navy-900 hover:bg-navy-700 text-white px-5 py-2 rounded-lg font-bold text-xs uppercase tracking-wider btn-pro">
+                    HÀNH CHÍNH NHÂN SỰ
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 max-w-6xl">
+        
+        <!-- Dashboard / Overview -->
+        <section id="overview" class="mb-20">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl md:text-4xl font-black text-slate-800 uppercase mb-3">Tổng Quan <span class="text-gradient">Dự Án</span></h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Kế hoạch triển khai hệ thống quản lý đánh giá nhân sự theo mô hình 3P</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+                <!-- KPI 1 -->
+                <div class="card-pro rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="clock" class="w-16 h-16 text-slate-800"></i>
+                    </div>
+                    <div class="flex flex-col h-full justify-between">
+                        <div>
+                            <p class="text-xs font-bold uppercase text-slate-400 mb-1">Thời gian thực hiện</p>
+                            <h3 class="text-4xl font-black text-slate-800">12 <span class="text-lg font-medium text-slate-400">Tháng</span></h3>
+                        </div>
+                        <div class="mt-4 w-full bg-slate-100 rounded-full h-1.5">
+                            <div class="bg-navy-900 h-1.5 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI 2 -->
+                <div class="card-pro rounded-xl p-6 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="users" class="w-16 h-16 text-gold-500"></i>
+                    </div>
+                    <div class="flex flex-col h-full justify-between">
+                        <div>
+                            <p class="text-xs font-bold uppercase text-slate-400 mb-1">Phạm vi áp dụng</p>
+                            <h3 class="text-2xl font-black text-slate-800">TOÀN CÔNG TY</h3>
+                        </div>
+                        <div class="flex -space-x-2 mt-4">
+                            <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-xs font-bold">B</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-300 border-2 border-white flex items-center justify-center text-xs font-bold">S</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-400 border-2 border-white flex items-center justify-center text-xs font-bold">+</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart Card -->
+                <div class="card-pro rounded-xl p-6 flex items-center gap-4">
+                    <div class="flex-1">
+                        <p class="text-xs font-bold uppercase text-slate-400 mb-2">Phân bổ nguồn lực</p>
+                        <ul class="text-xs space-y-1 text-slate-600 font-medium">
+                            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gold-500"></span> GĐ 1: KICK OFF</li>
+                            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-navy-900"></span> GĐ 2: P1 (Vị trí)</li>
+                            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-teal-600"></span> GĐ 3: P3 (Hiệu suất)</li>
+                            <li class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-slate-500"></span> GĐ 4: P2 (Năng lực)</li>
+                        </ul>
+                    </div>
+                    <div class="w-24 h-24">
+                        <canvas id="miniChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline" class="relative py-10">
+            <div class="timeline-line"></div>
+
+            <!-- Phase 1: Gold Theme (Highlights Start) -->
+            <div class="relative mb-20 reveal group">
+                <div class="md:flex items-center justify-between w-full">
+                    <div class="hidden md:block w-5/12 text-right pr-10">
+                        <h3 class="text-2xl font-black text-slate-800 uppercase">Giai Đoạn 1</h3>
+                        <p class="text-gold-500 font-bold uppercase text-lg">KICK OFF</p>
+                        <span class="inline-block mt-2 px-3 py-1 rounded bg-slate-100 text-slate-600 text-xs font-bold">03/2026</span>
+                    </div>
+
+                    <div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 z-10">
+                        <div class="w-12 h-12 bg-white border-4 border-gold-500 rounded-full shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="text-gold-500 font-black">01</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-5/12 pl-20 md:pl-10">
+                        <div class="card-pro rounded-xl p-0 overflow-hidden shadow-soft-3d">
+                            <div class="p-6 border-l-4 border-gold-500">
+                                <div class="md:hidden mb-4">
+                                    <h3 class="text-xl font-black text-slate-800 uppercase">Giai đoạn 1: KICK OFF</h3>
+                                    <span class="text-xs font-bold text-slate-500">03/2026</span>
+                                </div>
+                                <p class="text-slate-600 text-sm mb-4">Thiết lập nền tảng dự án, thành lập ban chỉ đạo và truyền thông tư tưởng cốt lõi.</p>
+                                
+                                <button onclick="toggleAccordion('acc-1', this)" class="flex items-center gap-2 text-xs font-bold uppercase text-gold-500 hover:text-gold-400 transition-colors">
+                                    <span>Chi tiết hạng mục</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                                </button>
+                                
+                                <div id="acc-1" class="accordion-content">
+                                    <div class="mt-4 pt-4 border-t border-slate-100 space-y-3">
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Trình bày & Lộ trình</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">3 Ngày</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Thành lập Ban dự án</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">15 Ngày</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Truyền thông Kick-Off</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">15 Ngày</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2: Navy Theme (Solid Structure) -->
+            <div class="relative mb-20 reveal group">
+                <div class="md:flex items-center flex-row-reverse justify-between w-full">
+                    <div class="hidden md:block w-5/12 text-left pl-10">
+                        <h3 class="text-2xl font-black text-slate-800 uppercase">Giai Đoạn 2</h3>
+                        <p class="text-navy-900 font-bold uppercase text-lg">Xây Dựng P1 [MÔ TẢ CÔNG VIỆC]</p>
+                        <span class="inline-block mt-2 px-3 py-1 rounded bg-slate-100 text-slate-600 text-xs font-bold">03/2026 - 05/2026</span>
+                    </div>
+
+                    <div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 z-10">
+                        <div class="w-12 h-12 bg-white border-4 border-navy-900 rounded-full shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="text-navy-900 font-black">02</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-5/12 pl-20 md:pr-10">
+                        <div class="card-pro rounded-xl p-0 overflow-hidden shadow-soft-3d">
+                            <div class="p-6 border-l-4 border-navy-900">
+                                <div class="md:hidden mb-4">
+                                    <h3 class="text-xl font-black text-slate-800 uppercase">Giai đoạn 2: Xây Dựng P1</h3>
+                                    <span class="text-xs font-bold text-slate-500">03/2026 - 05/2026</span>
+                                </div>
+                                <p class="text-slate-600 text-sm mb-4">Chuẩn hóa cấu trúc tổ chức, ma trận chức năng và mô tả công việc (JD).</p>
+                                
+                                <button onclick="toggleAccordion('acc-2', this)" class="flex items-center gap-2 text-xs font-bold uppercase text-navy-900 hover:text-navy-700 transition-colors">
+                                    <span>Chi tiết hạng mục</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                                </button>
+                                
+                                <div id="acc-2" class="accordion-content">
+                                    <div class="mt-4 pt-4 border-t border-slate-100 space-y-3">
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Rà soát Sơ đồ tổ chức</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">90 Ngày</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Xây dựng mô tả công việc</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">30 Ngày</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Danh sách chức danh</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">15 Ngày</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: Teal Theme (Performance Growth) -->
+            <div class="relative mb-20 reveal group">
+                <div class="md:flex items-center justify-between w-full">
+                    <div class="hidden md:block w-5/12 text-right pr-10">
+                        <h3 class="text-2xl font-black text-slate-800 uppercase">Giai Đoạn 3</h3>
+                        <p class="text-teal-600 font-bold uppercase text-lg">Xây Dựng P3 [KPI]</p>
+                        <span class="inline-block mt-2 px-3 py-1 rounded bg-slate-100 text-slate-600 text-xs font-bold">06/2026 - 10/2026</span>
+                    </div>
+
+                    <div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 z-10">
+                        <div class="w-12 h-12 bg-white border-4 border-teal-600 rounded-full shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="text-teal-600 font-black">03</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-5/12 pl-20 md:pl-10">
+                         <div class="card-pro rounded-xl p-0 overflow-hidden shadow-soft-3d">
+                            <div class="p-6 border-l-4 border-teal-600">
+                                <div class="md:hidden mb-4">
+                                    <h3 class="text-xl font-black text-slate-800 uppercase">Giai đoạn 3: Xây Dựng P3</h3>
+                                    <span class="text-xs font-bold text-slate-500">06/2026 - 10/2026</span>
+                                </div>
+                                <p class="text-slate-600 text-sm mb-4">Thiết lập hệ thống KPI và phương pháp đánh giá hiệu suất nhân viên.</p>
+                                
+                                <button onclick="toggleAccordion('acc-3', this)" class="flex items-center gap-2 text-xs font-bold uppercase text-teal-600 hover:text-teal-500 transition-colors">
+                                    <span>Chi tiết hạng mục</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                                </button>
+                                
+                                <div id="acc-3" class="accordion-content">
+                                    <div class="mt-4 pt-4 border-t border-slate-100 space-y-3">
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Ngân hàng PI</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">60 Ngày</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Biểu mẫu KPI</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">15 Ngày</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Đào tạo phân rã mục tiêu</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">5 Ngày</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4: Slate Theme (Foundation/Conclusion) -->
+            <div class="relative mb-20 reveal group">
+                <div class="md:flex items-center flex-row-reverse justify-between w-full">
+                    <div class="hidden md:block w-5/12 text-left pl-10">
+                        <h3 class="text-2xl font-black text-slate-800 uppercase">Giai Đoạn 4</h3>
+                        <p class="text-slate-500 font-bold uppercase text-lg">Xây Dựng P2 [KHUNG NĂNG LỰC]</p>
+                        <span class="inline-block mt-2 px-3 py-1 rounded bg-slate-100 text-slate-600 text-xs font-bold">11/2026 - 03/2027</span>
+                    </div>
+
+                    <div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 z-10">
+                        <div class="w-12 h-12 bg-white border-4 border-slate-500 rounded-full shadow-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <span class="text-slate-500 font-black">04</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-5/12 pl-20 md:pr-10">
+                        <div class="card-pro rounded-xl p-0 overflow-hidden shadow-soft-3d">
+                            <div class="p-6 border-l-4 border-slate-500">
+                                <div class="md:hidden mb-4">
+                                    <h3 class="text-xl font-black text-slate-800 uppercase">Giai đoạn 4: Xây Dựng P2</h3>
+                                    <span class="text-xs font-bold text-slate-500">11/2026 - 03/2027</span>
+                                </div>
+                                <p class="text-slate-600 text-sm mb-4">Hoàn thiện từ điển năng lực và khung đánh giá năng lực cá nhân.</p>
+                                
+                                <button onclick="toggleAccordion('acc-4', this)" class="flex items-center gap-2 text-xs font-bold uppercase text-slate-500 hover:text-slate-700 transition-colors">
+                                    <span>Chi tiết hạng mục</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                                </button>
+                                
+                                <div id="acc-4" class="accordion-content">
+                                    <div class="mt-4 pt-4 border-t border-slate-100 space-y-3">
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Từ điển năng lực</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">90 Ngày</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Bộ câu hỏi & Mẫu đánh giá</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">30 Ngày</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-slate-700 font-medium">Tiêu chuẩn năng lực</span>
+                                            <span class="text-slate-400 text-xs font-bold bg-slate-50 px-2 py-1 rounded">30 Ngày</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute left-6 md:left-1/2 transform -translate-x-1/2 bottom-0 w-6 h-6 rounded-full bg-slate-200 border-4 border-white shadow"></div>
+        </section>
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <h4 class="text-sm font-black uppercase text-slate-800 tracking-wider mb-2">Phòng Hành Chính Nhân Sự</h4>
+            <p class="text-xs text-slate-400">© 2026 Tài liệu lưu hành nội bộ.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add("active");
+                }
+            });
+        };
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll();
+
+        // Accordion
+        function toggleAccordion(id, btn) {
+            const content = document.getElementById(id);
+            const icon = btn.querySelector('svg');
+            
+            content.classList.toggle('open');
+            if(content.classList.contains('open')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Mini Chart
+        const ctx = document.getElementById('miniChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['P1', 'P2', 'P3', 'Khác'],
+                datasets: [{
+                    data: [4, 4, 3, 1],
+                    backgroundColor: [
+                        '#1e3a8a', // Navy
+                        '#64748b', // Slate
+                        '#0d9488', // Teal
+                        '#d97706'  // Gold
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+</body>
+</html>
